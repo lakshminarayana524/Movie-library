@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 export const AuthContext = createContext();
@@ -13,18 +13,13 @@ export const AuthProvider = ({ children }) => {
       setUserId(storedUserId);
     }
 
-    axios.get('http://localhost:3001/verify', { withCredentials: true })
+    axios.defaults.withCredentials = true;
+
+    axios.get('http://localhost:3001/verify')
       .then(res => {
         if (res.data.userId) {
           setUserId(res.data.userId);
           localStorage.setItem('userId', res.data.userId);
-          axios.get(`http://localhost:3001/user-details/${res.data.userId}`)
-            .then(response => {
-              setUsername(response.data.username);
-            })
-            .catch(error => {
-              console.error("Error retrieving username:", error);
-            });
         } else {
           localStorage.removeItem('userId');
         }
@@ -34,6 +29,18 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('userId');
       });
   }, []);
+
+  useEffect(() => {
+    if (userId) {
+      axios.get(`http://localhost:3001/user-details/${userId}`)
+        .then(response => {
+          setUsername(response.data.username);
+        })
+        .catch(error => {
+          console.error("Error retrieving username:", error);
+        });
+    }
+  }, [userId]);
 
   return (
     <AuthContext.Provider value={{ userId, setUserId, username }}>

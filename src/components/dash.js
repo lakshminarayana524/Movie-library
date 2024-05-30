@@ -1,19 +1,22 @@
-import React, { useContext } from 'react'
-import { AuthContext } from './AuthContext'
+import React, { useContext } from 'react';
+import { AuthContext } from './AuthContext';
+import { ToastContainer,toast } from 'react-toastify';
 
-const Dash = () => {
+const Dashboard = () => {
   const { username } = useContext(AuthContext);
 
-  return (
-    <div className="dash-nav">
-        <div className='dav-body'>
-            <div className=''></div>
-        </div>
-      dash
-      {username && <div>{username}</div>}
-      
-    </div>
-  )
-}
+  const handleCLick=()=>{
+    toast.success("You are logged in");
+  }
 
-export default Dash;
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      {username ? <p>Welcome, {username}!</p> : <p>Loading....</p> }
+      <button onClick={handleCLick}> on click</button>
+      <ToastContainer/>
+    </div>
+  );
+};
+
+export default Dashboard;

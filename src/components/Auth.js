@@ -1,37 +1,59 @@
-import React, { useEffect, useContext } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useContext, useState } from 'react';
 import { AuthContext } from './AuthContext';
-import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AuthToken = () => {
-  const navigate = useNavigate();
-  const { setUserId } = useContext(AuthContext);
+    const [msg, setMsg] = useState('');
+    const navigate = useNavigate();
+    const { setUserId } = useContext(AuthContext);
 
-  useEffect(() => {
-    axios.get('http://localhost:3001/verify', { withCredentials: true })
-      .then((res) => {
-        if (res.data.msg === "No token found" || res.data.msg === "Wrong Token") {
-            console.log(res.data.msg);
-          toast.error(res.data.msg);
-          setTimeout(() => {
-            navigate('/');
-          }, 3000);
-        } else {
-            console.log(res.data.msg);
-          const userId = res.data.userId;
-          setUserId(userId);
-          localStorage.setItem('userId', userId);
+    axios.defaults.withCredentials = true;
+
+    useEffect(() => {
+        console.log("useEffect - verifyToken called"); // Added debugging point
+        const verifyToken = async () => {
+            try {
+                const res = await axios.get('http://localhost:3001/verify');
+                console.log("API response:", res.data); // Log the API response
+                setMsg(res.data.msg);
+                if (res.data.msg !== "Successfully Verified") {
+                    localStorage.removeItem('userId');
+                } else {
+                    const userId = res.data.userId;
+                    setUserId(userId);
+                    localStorage.setItem('userId', userId);
+                }
+            } catch (err) {
+                console.error("Token verification failed:", err);
+                localStorage.removeItem('userId');
+                setMsg('Token verification failed'); // Fallback message
+            }
+        };
+
+        verifyToken();
+    }, []);
+
+    useEffect(() => {
+        console.log("useEffect - msg changed:", msg); // Added debugging point
+        if (msg === "No token found" || msg === "Wrong Token") {
+            toast.error(msg, {
+                autoClose: 3000,
+            });
+            const timer = setTimeout(() => {
+                navigate('/');
+            }, 2000);
+            return () => clearTimeout(timer);
         }
-      })
-      .catch(err => console.log(err));
-  }, [navigate, setUserId]);
+    }, [msg, navigate]);
 
-  return (
-    <div>
-      <ToastContainer />
-    </div>
-  );
+    return (
+        <div>
+            <ToastContainer />
+        </div>
+    );
 };
 
 export default AuthToken;
