@@ -8,23 +8,20 @@ import Dashboard from './components/dash'; // Make sure the correct component is
 import AuthToken from './components/Auth';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import MovieDetail from './components/MovieDetail';
-import './App.css'
 
 const App = () => {
   return (
     <div>
       <Router>
-        {/* <AuthProvider> */}
+        <AuthProvider>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<><AuthToken /><Dashboard /></>} /> {/* Ensure AuthToken is used here */}
-            <Route path='/movie/:title' element = {<><AuthToken /><MovieDetail/></>}/>
             <Route path="*" element={<Home />} />
           </Routes>
-        {/* </AuthProvider> */}
+        </AuthProvider>
       </Router>
       <ToastContainer /> {/* ToastContainer should be here to handle all toasts */}
     </div>

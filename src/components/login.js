@@ -1,19 +1,14 @@
-import React, { useState, useEffect , useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles/login.css';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import Loader from './loader';
 
 const Login = () => {
     const [email, setEmail] = useState('');
-    // const emailRef=useRef('');
-    console.log('ref',email);
-    console.log('emailRef',email)
     const [password, setPassword] = useState('');
     const [msg, setmsg] = useState('');
-    const [load,setload] = useState(false);
     const navigate = useNavigate();
 
     axios.defaults.withCredentials = true;
@@ -27,25 +22,19 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // const email=emailRef.current.value;
-        setload(true);
         axios.post(`http://localhost:3001/login`, { email, password })
             .then((res) => {
                 if (res.data.msg !== 'Login Successful') {
-                    
                     setmsg(res.data.msg);
                     toast.error(res.data.msg); // Display error toast
-                    setload(false)
                 } else {
                     console.log("Login Successful");
                     navigate('/dashboard');
-                    setload(false)
                 }
             })
             .catch(err => {
                 console.error("Login failed:", err);
                 toast.error('Login failed'); // Display error toast
-                setload(false);
             });
     }
 
@@ -60,9 +49,6 @@ const Login = () => {
             handleSubmit(e);
         }
     }
-    if(load){
-        return <Loader/>
-    }
 
     return (
         <div className='login-body'>
@@ -73,7 +59,7 @@ const Login = () => {
                             <h1>Login</h1>
                         </div>
                         <div className="login-input">
-                            <input type='email' name="Email" placeholder='Email' value={email} onChange={(e)=>setEmail(e.target.value)} />
+                            <input type='email' name="Email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         <div className="login-input">
                             <input type='password' name="Password" placeholder='Password' value={password} onKeyDown={handleEnter} onChange={(e) => setPassword(e.target.value)} />
