@@ -1,12 +1,13 @@
-// SearchBar.js
+// search.js
 
 import React from 'react';
+import './styles/search.css'
 
 const SearchBar = ({ value, onChange }) => {
   return (
     <div className="input-container">
       <input
-      className='input'
+      className='input-search'
         type="text"
         placeholder="Search Movies"
         value={value}
@@ -16,4 +17,4 @@ const SearchBar = ({ value, onChange }) => {
   );
 };
 
-export default SearchBar; 
+export default SearchBar;
