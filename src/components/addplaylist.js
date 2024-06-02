@@ -15,9 +15,9 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
       try {
         let response;
         if (playlistType === 'public') {
-          response = await axios.get("http://localhost:3001/publiclibget");
+          response = await axios.get("https://movie-library-backend-kxe0.onrender.com/publiclibget");
         } else if (playlistType === 'private') {
-          response = await axios.get("http://localhost:3001/privatelibgets");
+          response = await axios.get("https://movie-library-backend-kxe0.onrender.com/privatelibgets");
         }
 
         if (response.data.msg === 'Successfully fetched') {
@@ -63,9 +63,9 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
 
       let addToPlaylistRes;
       if (playlistType === 'private') {
-        addToPlaylistRes = await axios.post("http://localhost:3001/add-private", payload);
+        addToPlaylistRes = await axios.post("https://movie-library-backend-kxe0.onrender.com/add-private", payload);
       } else {
-        addToPlaylistRes = await axios.post("http://localhost:3001/add-playlist", payload);
+        addToPlaylistRes = await axios.post("https://movie-library-backend-kxe0.onrender.com/add-playlist", payload);
       }
 
       if (addToPlaylistRes.data.success) {

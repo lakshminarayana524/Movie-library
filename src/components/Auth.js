@@ -16,7 +16,7 @@ const AuthToken = () => {
         console.log("useEffect - verifyToken called"); // Added debugging point
         const verifyToken = async () => {
             try {
-                const res = await axios.get('http://localhost:3001/verify');
+                const res = await axios.get('https://movie-library-backend-kxe0.onrender.com/verify');
                 console.log("API response:", res.data); // Log the API response
                 setMsg(res.data.msg);
                 if (res.data.msg !== "Successfully Verified") {

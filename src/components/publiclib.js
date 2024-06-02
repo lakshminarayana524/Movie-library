@@ -30,7 +30,7 @@ const List = () => {
       return;
     }
 
-    axios.post('http://localhost:3001/publiclib', { uid, username, playlistname: playlistName })
+    axios.post('https://movie-library-backend-kxe0.onrender.com/publiclib', { uid, username, playlistname: playlistName })
       .then((res) => {
         if (res.data.msg === 'Successfully Playlist Created') {
           toast.success("Successfully Created Playlist");

@@ -25,7 +25,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        axios.post(`http://localhost:3001/login`, { email, password })
+        axios.post(`https://movie-library-backend-kxe0.onrender.com/login`, { email, password })
             .then((res) => {
                 if (res.data.msg !== 'Login Successful') {
                     setMsg(res.data.msg);

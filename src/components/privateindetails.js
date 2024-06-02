@@ -8,7 +8,7 @@ const Privateindetails = () => {
     const [playlist, setPlaylist] = useState(null);
     const uid=localStorage.getItem('userid')
     useEffect(() => {
-        axios.get(`http://localhost:3001/privategetall/${playlistname}`,{uid}) // Fetch the playlist details using the name
+        axios.get(`https://movie-library-backend-kxe0.onrender.com/privategetall/${playlistname}`,{uid}) // Fetch the playlist details using the name
             .then((res) => {
                 if (res.data.success) {
                     setPlaylist(res.data.playlist);
