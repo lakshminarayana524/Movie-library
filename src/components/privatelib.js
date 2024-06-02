@@ -29,7 +29,7 @@ const Privatelib = () => {
         console.log(response.data.playlists);
       } catch (error) {
         console.error('Error fetching playlists:', error);
-        toast.error('Error fetching playlists');
+        // toast.error('Error fetching playlists');
       }
     };
 

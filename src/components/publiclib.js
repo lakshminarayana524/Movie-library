@@ -38,7 +38,7 @@ const List = () => {
           setPlaylists([...playlists, res.data.playlist]);
           setNewPlaylistName(res.data.playlist.Name);
         } else {
-          toast.error(res.data.msg);
+          // toast.error(res.data.msg);
           console.log(res.data.msg);
         }
       })
