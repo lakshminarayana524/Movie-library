@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './styles/public_playlist.css';
 
-const PublicPlaylist = () => {
+const PrivatePlaylist = () => {
     const [playlists, setPlaylists] = useState([]);
     const navigate = useNavigate();
     
@@ -11,12 +11,12 @@ const PublicPlaylist = () => {
     useEffect(() => {
         const fetchPlaylists = async () => {
             try {
-                const res = await axios.get("http://localhost:3001/publiclibget");
+                const res = await axios.get("http://localhost:3001/privatelibgets");
                 if (res.data.msg === 'Successfully fetched') {
                     const userId = localStorage.getItem('userId');
-                    const filteredPlaylists = res.data.playlists.filter(playlist => playlist.uid === userId);
-                    setPlaylists(res.data.playlists);
-                    console.log("Data fetched and filtered");
+                    const filterdata=res.data.playlists.filter(playlist => playlist.uid === userId);
+                    setPlaylists(filterdata);
+                    console.log("Private playlists fetched");
                 }
             } catch (error) {
                 console.error('Error fetching playlists:', error);
@@ -36,10 +36,10 @@ const PublicPlaylist = () => {
                 <span className="back-arrow">&#8249;</span> Back
             </button>
             <div className='publicplaylist-content'>
-                <h3>Public Playlists</h3>
+                <h3>Private Playlists</h3>
                 <div className='publicplaylist-container'>
                     {playlists.length > 0 ? playlists.map((playlist, index) => (
-                        <div key={index} className='publicplaylist-card' onClick={() => navigate(`/public_playlist/${playlist.playlistname}`)}>
+                        <div key={index} className='publicplaylist-card' onClick={() => navigate(`/private_playlist/${playlist.playlistname}`)}>
                             <div className='publicplaylist-title'>
                                 <strong>{playlist.playlistname}</strong>
                             </div>
@@ -51,4 +51,4 @@ const PublicPlaylist = () => {
     );
 };
 
-export default PublicPlaylist;
+export default PrivatePlaylist;

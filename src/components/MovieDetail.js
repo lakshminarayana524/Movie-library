@@ -4,12 +4,15 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from './loader'; // Corrected import path
 import './styles/moviedetails.css'; // Import the CSS file
+import AddPlaylist from './addplaylist';
 
 const url = 'https://www.omdbapi.com/?apikey=f5b16502&t=';
 
 const MovieDetail = () => {
     const { title } = useParams();
     const [moviedetails, setmoviedetails] = useState(null);
+    const [selectedMovie, setSelectedMovie] = useState(null);
+    const [showAddPlaylistModal, setShowAddPlaylistModal] = useState(false);
 
     useEffect(() => {
         const fetchmoviedetails = async () => {
@@ -30,6 +33,16 @@ const MovieDetail = () => {
         fetchmoviedetails();
     }, [title]);
 
+    const handleMovieSelection = (movie) => {
+        setSelectedMovie(movie);
+        setShowAddPlaylistModal(true); // Show the AddPlaylist modal after selecting a movie
+    };
+
+    const closeAddPlaylistModal = () => {
+        setShowAddPlaylistModal(false);
+        setSelectedMovie(null);
+    };
+
     const handleBack = () => {
         window.history.back();
     };
@@ -41,8 +54,8 @@ const MovieDetail = () => {
     return (
         <div className='movie-cont'>
             <button className='back-button' onClick={handleBack}>
-                    <span className="back-arrow">&#8249;</span> Back
-                </button>
+                <span className="back-arrow">&#8249;</span> Back
+            </button>
             <div className='movie-details'>
                 <div className='movie-content'>
                     <div className='movie-container'>
@@ -73,7 +86,7 @@ const MovieDetail = () => {
                                     <strong>Plot:</strong> {moviedetails.Plot}
                                 </div>
                                 <div className='movie-add'>
-                                    <button className='movie-add-btn'>Add to list</button>
+                                    <button className='movie-add-btn'  onClick={() => handleMovieSelection(moviedetails)}>Add to list</button>
                                 </div>
                             </div>
                         </div>
@@ -81,6 +94,13 @@ const MovieDetail = () => {
                 </div>
                 <ToastContainer />
             </div>
+            {showAddPlaylistModal && (
+        <div className="playlist-modal">
+          <div className="playlist-modal-content">
+            <AddPlaylist selectedMovie={selectedMovie} onClose={closeAddPlaylistModal} />
+          </div>
+        </div>
+      )}
         </div>
     );
 };

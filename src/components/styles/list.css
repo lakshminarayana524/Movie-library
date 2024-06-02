@@ -1,0 +1,213 @@
+.pub-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    background-color: #f4f4f4;
+    border-radius: 15px;
+    width:350px;
+    margin:15px;
+}
+
+.pub-content {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    margin: 190px 20px 10px 20px;
+    border-radius: 15px;
+    transition: transform 0.3s;
+}
+
+.pub-body:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.pub-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pub-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.create-icon {
+    font-size: 48px;
+    cursor: pointer;
+    color: #007bff;
+    transition: color 0.2s;
+}
+
+.create-icon:hover {
+    color: #0056b3;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    margin-left: 15px;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.popup-header h2 {
+    margin: 0;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px;
+}
+
+.close-button {
+    width: 35%;
+    background: black;
+    border: none;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+}
+
+.input-playlist {
+    width: 80%;
+    padding: 10px;
+    margin: 5px 2px 0px 30px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.create-button {
+    width: 35%;
+    height: 50px;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+}
+
+.create-button:hover {
+    background-color: #000000;
+    border-color: rgb(25, 227, 68);
+    box-shadow: 0 4px 8px 0 rgb(25, 227, 68), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media(max-width: 1002px) {
+    .pub-body {
+        width: 300px;
+        max-width: 560px;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 893px) {
+    .pub-body {
+        width: 298px;
+    }
+
+    .pub-content {
+        width: 80%;
+        margin: 190px 20px 10px 20px;
+        padding: 15px;
+    }
+
+    .pub-title {
+        font-size: 20px;
+    }
+
+    .create-icon {
+        font-size: 40px;
+    }
+
+    .popup-content {
+        padding: 15px;
+        margin: 0 10px;
+    }
+
+    .popup-header h2 {
+        font-size: 18px;
+    }
+
+    .close-button {
+        font-size: 10px;
+    }
+
+    .input-playlist, button {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 678px) {
+    .pub-body {
+        width: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pub-content {
+        margin: 190px 20px 10px 20px;
+        padding: 10px;
+    }
+
+    .pub-title {
+        font-size: 18px;
+    }
+
+    .create-icon {
+        font-size: 36px;
+    }
+
+    .popup-content {
+        padding: 10px;
+        margin: 0 5px;
+    }
+
+    .popup-header h2 {
+        font-size: 16px;
+    }
+
+    .close-button {
+        font-size: 14px;
+    }
+
+    .input-playlist, button {
+        font-size: 12px;
+        padding: 6px;
+    }
+}

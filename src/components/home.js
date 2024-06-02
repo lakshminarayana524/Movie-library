@@ -7,7 +7,7 @@ const Home = () => {
     <div>
       Home 
       <div>
-      <button onClick={()=>{navigate('/login')}}>Login</button></div>
+      <button className='login-button' onClick={()=>{navigate('/login')}}>Login</button></div>
     </div>
   )
 }

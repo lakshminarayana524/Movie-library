@@ -1,85 +1,184 @@
 .movie-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Adjusted min-width for smaller screens */
+  gap: 16px;
+  padding: 16px;
+}
+
+.movie-card {
+  position: relative; /* Add relative positioning */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden; /* Hide overflow for the cover */
+  transition: transform 0.3s; /* Change the transition duration */
+  margin: 10px;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.movie-poster {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.movie-book {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.3); /* Add background color with transparency */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  transform: translateY(-100%); /* Initially move book content out of sight */
+  transition: transform 0.3s; /* Add transition for animation */
+}
+
+.movie-card:hover .movie-book {
+  transform: translateY(0); /* Move book content into sight on hover */
+}
+
+p {
+  font-size: 20px;
+  font-weight: bolder;
+  text-align: center;
+  margin: 0; /* Remove margin for better alignment */
+}
+
+.movie-cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.movie-cover p {
+  font-size: 16px; /* Adjust font size for cover text */
+  margin: 0; /* Remove margin for better alignment */
+}
+
+.movie-a {
+  margin: 15px;
+}
+
+.movie-title {
+  text-align: center;
+  margin: 20px;
+}
+
+.a {
+  color: black;
+  text-decoration: none;
+}
+
+.a:hover {
+  text-decoration: underline;
+}
+
+/* Modal Styles */
+.playlist-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.playlist-modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  max-width: 90%; /* Adjusted for smaller screens */
+}
+
+.movie-alt {
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap: wrap; Wrap items on smaller screens */
+}
+
+.play-public {
+  margin: 0px 20px;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 1200px) {
+  .movie-grid {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   }
-  
+
   .movie-card {
-    position: relative; /* Add relative positioning */
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden; /* Hide overflow for the cover */
-    transition: transform 0.3s; /* Change the transition duration */
-    margin:10px
+      margin: 8px;
   }
-  
-  .movie-card:hover {
-    transform: scale(1.05);
-    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .movie-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
-  
+
   .movie-poster {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
+      border-radius: 6px;
   }
-  
+
   .movie-book {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.3); /* Add background color with transparency */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    transform: translateY(-100%); /* Initially move book content out of sight */
-    transition: transform 0.3s; /* Add transition for animation */
+      padding: 15px;
   }
-  
-  .movie-card:hover .movie-book {
-    transform: translateY(0); /* Move book content into sight on hover */
-  }
-  
+
   p {
-    font-size: 20px;
-    font-weight: bolder;
-    text-align: center;
-    margin: 0; /* Remove margin for better alignment */
+      font-size: 18px;
   }
-  
-  .movie-cover {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-  }
-  
+
   .movie-cover p {
-    font-size: 16px; /* Adjust font size for cover text */
-    margin: 0; /* Remove margin for better alignment */
+      font-size: 14px;
   }
 
-  .movie-a{
-    margin:15px
+  .playlist-modal-content {
+      width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-grid {
+      grid-template-columns: 1fr; /* Single column on very small screens */
   }
 
-  .movie-title{
-    text-align: center;
-    margin:20px
+  .movie-card {
+      margin: 5px;
   }
 
-a{
-    color:black;
-    text-decoration: none;
+  .movie-book {
+      padding: 10px;
   }
-  
-  a:hover{
-    text-decoration: underline;
+
+  p {
+      font-size: 16px;
   }
-  
+
+  .movie-cover p {
+      font-size: 12px;
+  }
+
+  .playlist-modal-content {
+      width: 95%;
+  }
+
+  .movie-alt{
+    flex-wrap: wrap;
+    margin:15px 0px;
+  }
+
+}

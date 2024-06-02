@@ -1,0 +1,31 @@
+.playlists-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.playlists-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.movies-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.movie-card {
+    margin: 10px;
+    width: 280px; /* Adjust width of cards */
+}
+
+.movie-book {
+    padding: 20px;
+}
+
+.created-by-you {
+    text-align: center;
+    font-style: italic;
+}

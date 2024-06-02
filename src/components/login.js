@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles/login.css';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,12 +8,9 @@ import Loader from './loader';
 
 const Login = () => {
     const [email, setEmail] = useState('');
-    // const emailRef=useRef('');
-    console.log('ref',email);
-    console.log('emailRef',email)
     const [password, setPassword] = useState('');
-    const [msg, setmsg] = useState('');
-    const [load,setload] = useState(false);
+    const [msg, setMsg] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     axios.defaults.withCredentials = true;
@@ -27,41 +24,34 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // const email=emailRef.current.value;
-        setload(true);
+        setLoading(true);
         axios.post(`http://localhost:3001/login`, { email, password })
             .then((res) => {
                 if (res.data.msg !== 'Login Successful') {
-                    
-                    setmsg(res.data.msg);
+                    setMsg(res.data.msg);
                     toast.error(res.data.msg); // Display error toast
-                    setload(false)
                 } else {
                     console.log("Login Successful");
                     navigate('/dashboard');
-                    setload(false)
                 }
             })
             .catch(err => {
                 console.error("Login failed:", err);
                 toast.error('Login failed'); // Display error toast
-                setload(false);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     }
 
-    const handlesignup = () => {
-        setTimeout(() => {
-            navigate('/signup');
-        }, 2000);
+    const handleSignup = () => {
+        navigate('/signup');
     }
 
     const handleEnter = (e) => {
         if (e.key === 'Enter') {
             handleSubmit(e);
         }
-    }
-    if(load){
-        return <Loader/>
     }
 
     return (
@@ -73,16 +63,16 @@ const Login = () => {
                             <h1>Login</h1>
                         </div>
                         <div className="login-input">
-                            <input type='email' name="Email" placeholder='Email' value={email} onChange={(e)=>setEmail(e.target.value)} />
+                            <input type='email' name="Email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         <div className="login-input">
                             <input type='password' name="Password" placeholder='Password' value={password} onKeyDown={handleEnter} onChange={(e) => setPassword(e.target.value)} />
                         </div>
                         <div className='login-text'>
-                            <p>Please Signup? <span className='login-text-span' onClick={handlesignup}>Login</span></p>
+                            <p>Please <span className='login-text-span' onClick={handleSignup}>Signup</span>?</p>
                         </div>
                         <div className="login-button">
-                            <button onClick={handleSubmit}>Submit</button>
+                            <button onClick={handleSubmit} disabled={loading}>{loading ? 'Loading...' : 'Submit'}</button>
                         </div>
                         <div className={`login-error ${msg ? 'blink' : ''}`}>
                             {msg && <p className="error-message">{msg}</p>}

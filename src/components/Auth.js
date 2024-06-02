@@ -39,11 +39,11 @@ const AuthToken = () => {
     useEffect(() => {
         console.log("useEffect - msg changed:", msg); // Added debugging point
         if (msg === "No token found" || msg === "Wrong Token") {
-            if(msg==='Wrong Token')
+            if(msg==='Wrong Token'){
                 toast.error('Something went wrong', {
                     autoClose: 3000,
                 }); 
-            else
+            }else{
             toast.error(msg, {
                 autoClose: 3000,
             });
@@ -51,6 +51,8 @@ const AuthToken = () => {
                 navigate('/');
             }, 2000);
             return () => clearTimeout(timer);
+        }
+
         }
     }, [msg, navigate]);
 
