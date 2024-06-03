@@ -18,7 +18,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        axios.post(`https://movie-library-backend-kxe0.onrender.com/publiclistgetall/login`, { email, password })
+        axios.post(`https://movie-library-backend-kxe0.onrender.com/login`, { email, password })
         // axios.post(`http://localhost:5000/login`, { email, password })
 
             .then((res) => {

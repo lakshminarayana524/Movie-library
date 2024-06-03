@@ -13,7 +13,7 @@ const Nav = () => {
 
   useEffect(() => {
     // axios.get('http://localhost:5000/findtoken')
-    axios.get('https://movie-library-backend-kxe0.onrender.com/publiclistgetall/findtoken')
+    axios.get('https://movie-library-backend-kxe0.onrender.com/findtoken')
 
       .then(response => {
         console.log("token",response.data.tokenFound)
