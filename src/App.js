@@ -25,7 +25,7 @@ const App = () => {
   const handleLogout = async () => {
     try {
       // Send a POST request to the /logout endpoint
-      await axios.post('https://movie-library-backend-kxe0.onrender.com/publiclistgetall/logout');
+      await axios.post('https://movie-library-backend-kxe0.onrender.com/logout');
       setIsLoggedIn(false);
       localStorage.removeItem('userId');
     } catch (err) {

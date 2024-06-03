@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     axios.defaults.withCredentials = true;
 
     // axios.get('http://localhost:5000/verify')
-    axios.get('https://movie-library-backend-kxe0.onrender.com/publiclistgetall/verify')
+    axios.get('https://movie-library-backend-kxe0.onrender.com/verify')
 
       .then(res => {
         if (res.data.userId) {
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (userId) {
       // axios.get(`http://localhost:5000/user-details/${userId}`)
-      axios.get(`https://movie-library-backend-kxe0.onrender.com/publiclistgetall/${userId}`)
+      axios.get(`https://movie-library-backend-kxe0.onrender.com/user-details/${userId}`)
         .then(response => {
           setUsername(response.data.username);
         })

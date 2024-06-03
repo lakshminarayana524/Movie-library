@@ -31,7 +31,7 @@ const Nav = () => {
 
   const handleLogout = () => {
     // axios.post('http://localhost:5000/logout')
-    axios.post('https://movie-library-backend-kxe0.onrender.com/publiclistgetall/logout')
+    axios.post('https://movie-library-backend-kxe0.onrender.com/logout')
 
       .then(response => {
         setIsLoggedIn(false);
