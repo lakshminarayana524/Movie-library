@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom'; // Import useParams to get route parameters
 import './styles/playlistindetail.css'; // Import the same CSS file used for MovieAPI component
+import Loader from './loader';
 
 const PlaylistInDetail = () => {
    const { playlistname } = useParams(); // Get the playlist name from the route parameters
     const [playlist, setPlaylist] = useState(null);
+    const [load,setload]=useState(false);
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
+        setload(true);
         // axios.get(`http://localhost:5000/publiclistgetall/${playlistname}`) // Fetch the playlist details using the name
         axios.get(`https://movie-library-backend-kxe0.onrender.com/publiclistgetall/${playlistname}`) // Fetch the playlist details using the name
 
@@ -16,16 +19,22 @@ const PlaylistInDetail = () => {
                 if (res.data.success) {
                     setPlaylist(res.data.playlist);
                     console.log("Playlist data fetched");
+                    setload(false);
                 }
             })
             .catch((error) => {
                 console.error('Error fetching playlist details:', error);
+                setload(false);
             });
     }, [playlistname]);
 
     const handleBack = () => {
         window.history.back();
     }; 
+
+    if(load){
+        return <Loader/>
+    }
 
     return (
         <div className="playlists-container">

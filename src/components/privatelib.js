@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { AuthContext } from './AuthContext';
 import { FaPlusCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import Loader from './loader';
 
 const PrivatePlaylist = ({ playlist }) => (
   <div className='playlist-card'>
@@ -18,6 +19,7 @@ const Privatelib = () => {
   const [playlistName, setPlaylistName] = useState('');
   const [newPlaylist, setNewPlaylist] = useState(null);
   const { username } = useContext(AuthContext);
+  const [load,setload] = useState(false);
   const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
 
@@ -25,13 +27,16 @@ const Privatelib = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setload(true)
       try {
         // const response = await axios.get(`http://localhost:5000/privatelibget/${userId}`);
         const response = await axios.get(`https://movie-library-backend-kxe0.onrender.com/privatelibget/${userId}`);
 
         setPlaylists(response.data.playlists);
+        setload(false)
         console.log(response.data.playlists);
       } catch (error) {
+        setload(false)
         console.error('Error fetching playlists:', error);
         // toast.error('Error fetching playlists');
       }
@@ -44,7 +49,12 @@ const Privatelib = () => {
     setShowPopup(!showPopup);
   };
 
+  if(load){
+    return <Loader />
+  }
+
   const handleCreatePlaylist = async () => {
+    setload(true)
     try {
       // const response = await axios.post('http://localhost:5000/privatelib', {
       const response = await axios.post('https://movie-library-backend-kxe0.onrender.com/privatelib', {
@@ -60,13 +70,16 @@ const Privatelib = () => {
         const newPlaylist = response.data.playlist;
         setPlaylists([...playlists, newPlaylist]);
         setNewPlaylist(newPlaylist);
+        setload(false);
       } else {
         toast.error(response.data.msg);
         console.log(response.data.msg);
+        setload(false);
       }
     } catch (error) {
       console.error('Error Occurred', error);
       toast.error('Error creating playlist');
+      setload(false);
     }
 
     setShowPopup(false);

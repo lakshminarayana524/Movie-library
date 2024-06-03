@@ -13,21 +13,26 @@ const MovieDetail = () => {
     const [moviedetails, setmoviedetails] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [showAddPlaylistModal, setShowAddPlaylistModal] = useState(false);
+    const [load,setload]=useState(false);
 
     useEffect(() => {
         const fetchmoviedetails = async () => {
+            setload(true);
             try {
                 const res = await fetch(`${url}${title}`);
                 const data = await res.json();
                 if (data.Response === 'True') {
                     setmoviedetails(data);
+                    setload(false)
                 } else {
                     console.log("Movie details not found");
                     toast.error("Movie details not found");
+                    setload(false);
                 }
             } catch (e) {
                 console.log("Error while fetching");
                 toast.error("Something went wrong unable to fetch");
+                setload(false);
             }
         };
         fetchmoviedetails();
@@ -49,6 +54,10 @@ const MovieDetail = () => {
 
     if (!moviedetails) {
         return <Loader />; 
+    }
+
+    if(load){
+        return <Loader />
     }
 
     return (

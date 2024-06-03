@@ -2,14 +2,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
+import Loader from './loader';
 
 const Privateindetails = () => {
     const { playlistname } = useParams(); // Get the playlist name from the route parameters
     const [playlist, setPlaylist] = useState(null);
+    const [load,setload] = useState(false);
     const uid=localStorage.getItem('userid')
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
+        setload(true);
         // axios.get(`http://localhost:5000/privategetall/${playlistname}`,{uid}) // Fetch the playlist details using the name
         axios.get(`https://movie-library-backend-kxe0.onrender.com/privategetall/${playlistname}`,{uid}) // Fetch the playlist details using the name
 
@@ -17,16 +20,22 @@ const Privateindetails = () => {
                 if (res.data.success) {
                     setPlaylist(res.data.playlist);
                     console.log("Playlist data fetched");
+                    setload(false);
                 }
             })
             .catch((error) => {
                 console.error('Error fetching playlist details:', error);
+                setload(false);
             });
     }, [playlistname]);
 
     const handleBack = () => {
         window.history.back();
     }; 
+
+    if(load){
+        return <Loader/>
+    }
 
     return (
         <div className="playlists-container">

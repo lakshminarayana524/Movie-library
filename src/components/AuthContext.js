@@ -10,12 +10,6 @@ export const AuthProvider = ({ children }) => {
   const [username, setUsername] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLogout = () => {
-    Cookies.remove('token');
-    localStorage.removeItem('userId');
-    setIsLoggedIn(false);
-    setUserId(null);
-  };
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
@@ -28,10 +22,8 @@ export const AuthProvider = ({ children }) => {
       setUserId(storedUserId);
     }
 
-    axios.defaults.withCredentials = true;
-
-    // axios.get('http://localhost:5000/verify')
     axios.get('https://movie-library-backend-kxe0.onrender.com/verify')
+    // axios.get('http://localhost:5000/verify')
 
       .then(res => {
         if (res.data.userId) {
@@ -49,8 +41,8 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (userId) {
-      // axios.get(`http://localhost:5000/user-details/${userId}`)
       axios.get(`https://movie-library-backend-kxe0.onrender.com/user-details/${userId}`)
+      // axios.get(`http://localhost:5000/user-details/${userId}`)
         .then(response => {
           setUsername(response.data.username);
         })
@@ -61,7 +53,7 @@ export const AuthProvider = ({ children }) => {
   }, [userId]);
 
   return (
-    <AuthContext.Provider value={{ userId, setUserId, username, isLoggedIn, handleLogout }}>
+    <AuthContext.Provider value={{ userId, setUserId, username, isLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );

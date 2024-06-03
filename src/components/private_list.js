@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './styles/public_playlist.css';
+import Loader from './loader';
 
 const PrivatePlaylist = () => {
     const [playlists, setPlaylists] = useState([]);
+    const[load,setload]=useState(false);
     const navigate = useNavigate();
     axios.defaults.withCredentials = true;
     
 
     useEffect(() => {
         const fetchPlaylists = async () => {
+            setload(true)
             try {
                 // const res = await axios.get("http://localhost:5000/privatelibgets");
                 const res = await axios.get("https://movie-library-backend-kxe0.onrender.com/privatelibgets");
@@ -20,9 +23,11 @@ const PrivatePlaylist = () => {
                     const filterdata=res.data.playlists.filter(playlist => playlist.uid === userId);
                     setPlaylists(filterdata);
                     console.log("Private playlists fetched");
+                    setload(false);
                 }
             } catch (error) {
                 console.error('Error fetching playlists:', error);
+                setload(false);
             }
         };
 
@@ -32,6 +37,10 @@ const PrivatePlaylist = () => {
     const handleBack = () => {
         window.history.back();
     };
+
+    if(load){
+        return <Loader />
+    }
 
     return (
         <div className='publicplaylist-body'>

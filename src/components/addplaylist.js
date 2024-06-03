@@ -3,16 +3,19 @@ import axios from 'axios';
 import './styles/addPlaylist.css'; // Ensure to create and style this CSS file
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import Loader from './loader';
 
 const AddPlaylist = ({ selectedMovie, onClose }) => {
   const [playlists, setPlaylists] = useState([]);
   const [selectedPlaylist, setSelectedPlaylist] = useState('');
-  const [playlistType, setPlaylistType] = useState(''); // 'public' or 'private'
+  const [playlistType, setPlaylistType] = useState(''); 
+  const [load,setload] = useState(false);
   const navigate = useNavigate(); // Initialize navigate hook
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
     const fetchPlaylists = async () => {
+      setload(true);
       try {
         let response;
         if (playlistType === 'public') {
@@ -30,9 +33,11 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
           const filteredPlaylists = response.data.playlists.filter(playlist => playlist.uid === userId);
           setPlaylists(filteredPlaylists);
           console.log(`${playlistType.charAt(0).toUpperCase() + playlistType.slice(1)} Playlists fetched:`, filteredPlaylists);
+          setload(false);
         }
       } catch (error) {
         console.error(`Error fetching ${playlistType} playlists:`, error);
+        setload(false);
       }
     };
 
@@ -49,13 +54,19 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
     setSelectedPlaylist(event.target.value);
   };
 
+  if(load){
+    return <Loader />
+  }
+
   const handleAddToPlaylist = async () => {
+    setload(true)
     try {
       // Check if user is logged in
       const userId = localStorage.getItem('userId');
       if (!userId) {
         // If not logged in, redirect to login page
         navigate('/login');
+        setload(false);
         return;
       }
 
@@ -76,12 +87,15 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
       if (addToPlaylistRes.data.success) {
         console.log(`Added ${selectedMovie.Title} to ${playlistType} playlist successfully`);
         toast.success("Movie added to playlist successfully");
+        setload(false);
         onClose();
       } else {
+        setload(false)
         console.log('Failed to add movie to playlist:', addToPlaylistRes.data.msg);
         toast.error("Failed to add movie to playlist");
       }
     } catch (error) {
+      setload(false);
       console.error('Error adding movie to playlist:', error);
       toast.error("Server Error: Failed to add movie to playlist");
     }
@@ -162,7 +176,7 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
           )}
         </div>
       )}
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };
