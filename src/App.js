@@ -20,6 +20,8 @@ import './App.css';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  axios.defaults.withCredentials = true;
+
   const handleLogout = async () => {
     try {
       // Send a POST request to the /logout endpoint

@@ -6,6 +6,7 @@ import './styles/public_playlist.css';
 const PrivatePlaylist = () => {
     const [playlists, setPlaylists] = useState([]);
     const navigate = useNavigate();
+    axios.defaults.withCredentials = true;
     
 
     useEffect(() => {

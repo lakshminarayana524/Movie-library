@@ -19,6 +19,8 @@ const List = () => {
   const [newPlaylistName, setNewPlaylistName] = useState('');
   const { username } = useContext(AuthContext);
   const uid = localStorage.getItem("userId");
+  axios.defaults.withCredentials = true;
+
 
   const togglePopup = () => {
     setShowPopup(!showPopup);

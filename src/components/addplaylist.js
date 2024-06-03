@@ -9,6 +9,7 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
   const [selectedPlaylist, setSelectedPlaylist] = useState('');
   const [playlistType, setPlaylistType] = useState(''); // 'public' or 'private'
   const navigate = useNavigate(); // Initialize navigate hook
+  axios.defaults.withCredentials = true;
 
   useEffect(() => {
     const fetchPlaylists = async () => {

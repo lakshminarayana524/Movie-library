@@ -7,6 +7,8 @@ const Privateindetails = () => {
     const { playlistname } = useParams(); // Get the playlist name from the route parameters
     const [playlist, setPlaylist] = useState(null);
     const uid=localStorage.getItem('userid')
+    axios.defaults.withCredentials = true;
+
     useEffect(() => {
         // axios.get(`http://localhost:5000/privategetall/${playlistname}`,{uid}) // Fetch the playlist details using the name
         axios.get(`https://movie-library-backend-kxe0.onrender.com/privategetall/${playlistname}`,{uid}) // Fetch the playlist details using the name

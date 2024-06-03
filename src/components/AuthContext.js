@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(false);
     setUserId(null);
   };
+  axios.defaults.withCredentials = true;
 
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');

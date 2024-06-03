@@ -21,6 +21,8 @@ const Privatelib = () => {
   const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
 
+  axios.defaults.withCredentials = true;
+
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -6,6 +6,7 @@ import './styles/playlistindetail.css'; // Import the same CSS file used for Mov
 const PlaylistInDetail = () => {
    const { playlistname } = useParams(); // Get the playlist name from the route parameters
     const [playlist, setPlaylist] = useState(null);
+    axios.defaults.withCredentials = true;
 
     useEffect(() => {
         // axios.get(`http://localhost:5000/publiclistgetall/${playlistname}`) // Fetch the playlist details using the name

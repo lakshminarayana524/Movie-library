@@ -9,6 +9,8 @@ const Nav = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+  axios.defaults.withCredentials = true;
+
   useEffect(() => {
     // axios.get('http://localhost:5000/findtoken')
     axios.get('https://movie-library-backend-kxe0.onrender.com/publiclistgetall/findtoken')
