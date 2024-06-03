@@ -8,7 +8,9 @@ const PlaylistInDetail = () => {
     const [playlist, setPlaylist] = useState(null);
 
     useEffect(() => {
+        // axios.get(`http://localhost:5000/publiclistgetall/${playlistname}`) // Fetch the playlist details using the name
         axios.get(`https://movie-library-backend-kxe0.onrender.com/publiclistgetall/${playlistname}`) // Fetch the playlist details using the name
+
             .then((res) => {
                 if (res.data.success) {
                     setPlaylist(res.data.playlist);

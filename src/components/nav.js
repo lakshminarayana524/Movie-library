@@ -1,17 +1,45 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import './styles/nav.css'; // You'll need to create this CSS file for styling
+import axios from 'axios';
+import './styles/nav.css';
 
-const Nav = ({ isLoggedIn, handleLogout }) => {
+const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // axios.get('http://localhost:5000/findtoken')
+    axios.get('https://movie-library-backend-kxe0.onrender.com/publiclistgetall/findtoken')
+
+      .then(response => {
+        console.log("token",response.data.tokenFound)
+        setIsLoggedIn(response.data.tokenFound);
+      })
+      .catch(error => {
+        console.error('Error checking token:', error);
+        setIsLoggedIn(false);
+      });
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
- 
-  
+  const handleLogout = () => {
+    // axios.post('http://localhost:5000/logout')
+    axios.post('https://movie-library-backend-kxe0.onrender.com/publiclistgetall/logout')
+
+      .then(response => {
+        setIsLoggedIn(false);
+        window.location.reload(); // Forcefully refresh the page
+        navigate('/');
+      })
+      .catch(error => {
+        console.error('Error logging out:', error);
+      });
+  };
 
   return (
     <nav className="nav">
@@ -40,9 +68,9 @@ const Nav = ({ isLoggedIn, handleLogout }) => {
           </li>
           <li className="nav-item">
             {isLoggedIn ? (
-              <span className="nav-links" onClick={() => { handleLogout(); toggleMenu(); }}>
+              <button className="nav-links logout-button" onClick={handleLogout}>
                 Logout
-              </span>
+              </button>
             ) : (
               <Link to="/login" className="nav-links" onClick={toggleMenu}>
                 Login

@@ -15,12 +15,12 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
       try {
         let response;
         if (playlistType === 'public') {
-          response = await axios.get("https://movie-library-backend-kxe0.onrender.com/publiclibget");
-          // response = await axios.get("https://movie-library-backend-kxe0.onrender.com/publiclibget");
+          // response = await axios.get("http://localhost:5000/publiclibget");
+        response = await axios.get("https://movie-library-backend-kxe0.onrender.com/publiclibget");
 
         } else if (playlistType === 'private') {
-          response = await axios.get("http://localhost:3001/privatelibgets");
-          // response = await axios.get("https://movie-library-backend-kxe0.onrender.com/privatelibgets");
+          // response = await axios.get("http://localhost:5000/privatelibgets");
+          response = await axios.get("https://movie-library-backend-kxe0.onrender.com/privatelibgets");
 
         }
 

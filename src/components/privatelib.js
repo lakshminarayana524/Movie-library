@@ -24,7 +24,9 @@ const Privatelib = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // const response = await axios.get(`http://localhost:5000/privatelibget/${userId}`);
         const response = await axios.get(`https://movie-library-backend-kxe0.onrender.com/privatelibget/${userId}`);
+
         setPlaylists(response.data.playlists);
         console.log(response.data.playlists);
       } catch (error) {
@@ -42,7 +44,9 @@ const Privatelib = () => {
 
   const handleCreatePlaylist = async () => {
     try {
+      // const response = await axios.post('http://localhost:5000/privatelib', {
       const response = await axios.post('https://movie-library-backend-kxe0.onrender.com/privatelib', {
+
         uid: userId,
         username,
         playlistname: playlistName,

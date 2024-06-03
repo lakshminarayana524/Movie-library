@@ -5,16 +5,17 @@ import Nav from './components/nav';
 import Login from './components/login';
 import Signup from './components/signup';
 import Dashboard from './components/dash';
+import { ToastContainer } from 'react-toastify';
+import AddPlaylist from './components/addplaylist';
 import MovieDetail from './components/MovieDetail';
+import { AuthProvider } from './components/AuthContext';
+import PrivatePlaylist from './components/private_list';
 import PublicPlaylist from './components/public_playlist';
 import PlaylistInDetail from './components/PlaylistInDetail';
-import AddPlaylist from './components/addplaylist';
 import Privateindetails from './components/privateindetails';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios'; 
 import './App.css';
-import { ToastContainer } from 'react-toastify';
-import axios from 'axios'; // Import Axios
-import PrivatePlaylist from './components/private_list';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,7 +23,7 @@ const App = () => {
   const handleLogout = async () => {
     try {
       // Send a POST request to the /logout endpoint
-      await axios.post('http://localhost:3001/logout');
+      await axios.post('https://movie-library-backend-kxe0.onrender.com/publiclistgetall/logout');
       setIsLoggedIn(false);
       localStorage.removeItem('userId');
     } catch (err) {
@@ -41,6 +42,7 @@ const App = () => {
   return (
     <div>
       <Router>
+      <AuthProvider>
         <AuthToken setIsLoggedIn={setIsLoggedIn} /> {/* Include AuthToken */}
         <Nav isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
         <Routes>
@@ -55,6 +57,7 @@ const App = () => {
           <Route path="/public_playlist/:playlistname" element={<PlaylistInDetail />} />
           <Route path="/add" element={<AddPlaylist />} />
         </Routes>
+        </AuthProvider>
       </Router>
       <ToastContainer />
     </div>

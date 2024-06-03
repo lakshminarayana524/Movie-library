@@ -40,7 +40,9 @@ const Signup = () => {
             setPasswordError(newError);
             return;
         }
+        // axios.post(`http://localhost:5000/signup`, { name, email, password })
         axios.post(`https://movie-library-backend-kxe0.onrender.com/signup`, { name, email, password })
+
             .then((res) => {
                 if (res.data.msg === 'Email already exist') {
                     setPasswordError(res.data.msg);

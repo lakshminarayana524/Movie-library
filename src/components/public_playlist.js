@@ -11,6 +11,8 @@ const PublicPlaylist = () => {
     useEffect(() => {
         const fetchPlaylists = async () => {
             try {
+                // const res = await axios.get("http://localhost:5000/publiclibget");
+
                 const res = await axios.get("https://movie-library-backend-kxe0.onrender.com/publiclibget");
                 if (res.data.msg === 'Successfully fetched') {
                     const userId = localStorage.getItem('userId');
