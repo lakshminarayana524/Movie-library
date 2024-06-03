@@ -79,25 +79,29 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
 
       let addToPlaylistRes;
       if (playlistType === 'private') {
+        // addToPlaylistRes = await axios.post("http://localhost:5000/add-private", payload);
+
         addToPlaylistRes = await axios.post("https://movie-library-backend-kxe0.onrender.com/add-private", payload);
       } else {
+        // addToPlaylistRes = await axios.post("http://localhost:5000/add-playlist", payload);
+
         addToPlaylistRes = await axios.post("https://movie-library-backend-kxe0.onrender.com/add-playlist", payload);
       }
 
       if (addToPlaylistRes.data.success) {
         console.log(`Added ${selectedMovie.Title} to ${playlistType} playlist successfully`);
-        toast.success("Movie added to playlist successfully");
+        toast.success("Movie added to playlist successfully",{ autoClose: 3000 });
         setload(false);
         onClose();
       } else {
         setload(false)
         console.log('Failed to add movie to playlist:', addToPlaylistRes.data.msg);
-        toast.error("Failed to add movie to playlist");
+        toast.error("Failed to add movie to playlist",{ autoClose: 3000 });
       }
     } catch (error) {
       setload(false);
       console.error('Error adding movie to playlist:', error);
-      toast.error("Server Error: Failed to add movie to playlist");
+      toast.error("Server Error: Failed to add movie to playlist",{ autoClose: 3000 });
     }
   };
 
@@ -121,35 +125,15 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
         </div>
       ) : (
         <div>
-          {playlistType === 'public' ? (
+          {playlists.length === 0 ? (
             <>
-              <h3>Select Public Playlist:</h3>
-              <select
-                value={selectedPlaylist}
-                onChange={handlePlaylistSelect}
-                className="playlist-select"
-              >
-                <option value="">Select a playlist</option>
-                {playlists.map((playlist, index) => (
-                  <option key={index} value={playlist.playlistname}>
-                    {playlist.playlistname}
-                  </option>
-                ))}
-              </select>
-              <div className="button-group">
-                <button
-                  onClick={handleAddToPlaylist}
-                  className="add-button"
-                  disabled={!selectedPlaylist}
-                >
-                  Add to Playlist
-                </button>
-                <button onClick={onClose} className="cancel-button">Cancel</button>
-              </div>
+            <p>No {playlistType === 'public' ? 'public' : 'private'} playlists found. Please create one.</p>
+            <button onClick={onClose} className="cancel-button">Cancel</button>
             </>
+
           ) : (
             <>
-              <h3>Select Private Playlist:</h3>
+              <h3>Select {playlistType === 'public' ? 'Public' : 'Private'} Playlist:</h3>
               <select
                 value={selectedPlaylist}
                 onChange={handlePlaylistSelect}

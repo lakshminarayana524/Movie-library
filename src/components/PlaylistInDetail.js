@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom'; // Import useParams to get route parameters
+import { useNavigate, useParams } from 'react-router-dom'; // Import useParams to get route parameters
 import './styles/playlistindetail.css'; // Import the same CSS file used for MovieAPI component
 import Loader from './loader';
 
@@ -8,6 +8,7 @@ const PlaylistInDetail = () => {
    const { playlistname } = useParams(); // Get the playlist name from the route parameters
     const [playlist, setPlaylist] = useState(null);
     const [load,setload]=useState(false);
+    const navigate =useNavigate();
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
@@ -54,6 +55,8 @@ const PlaylistInDetail = () => {
                                 <h3 className='movie-title'>{movie.Title}</h3>
                                 <p className='movie-year'><strong>Year:</strong> {movie.Year}</p>
                                 <p className='movie-type'><strong>Type:</strong> {movie.Type}</p>
+                                <p className='movie-a' onClick={() => navigate(`/movie/${movie.Title}`)}><span className='a'>View in detail</span></p>
+
                                 {localStorage.getItem('userId') === playlist.uid && <p className='created-by-you'>Created by You</p>}
                             </div>
                         </div>

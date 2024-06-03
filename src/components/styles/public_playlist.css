@@ -20,6 +20,31 @@
   margin-bottom:15px;
 }
 
+.all-playlists{
+  background-color: transparent;
+  border:transparent;
+
+}
+
+.all-playlists:hover{
+  background-color: black;
+  color:white;
+  transform: scale(1.1);
+}
+
+
+.my-playlists{
+  background-color: transparent;
+  border:transparent;
+}
+
+.my-playlists:hover{
+  background-color: black;
+  color:white;
+  transform: scale(1.1);
+}
+
+
 .back-button .back-arrow {
   font-size: 18px;
   margin-right: 5px;

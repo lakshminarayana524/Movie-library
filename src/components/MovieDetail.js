@@ -26,12 +26,12 @@ const MovieDetail = () => {
                     setload(false)
                 } else {
                     console.log("Movie details not found");
-                    toast.error("Movie details not found");
+                    toast.error("Movie details not found",{ autoClose: 3000 });
                     setload(false);
                 }
             } catch (e) {
                 console.log("Error while fetching");
-                toast.error("Something went wrong unable to fetch");
+                toast.error("Something went wrong unable to fetch",{ autoClose: 3000 });
                 setload(false);
             }
         };

@@ -65,20 +65,20 @@ const Privatelib = () => {
       });
 
       if (response.data.msg === 'Successfully Playlist Created') {
-        toast.success('Successfully Created Playlist');
+        toast.success('Successfully Created Playlist',{ autoClose: 3000 });
         console.log('Successfully Created Playlist');
         const newPlaylist = response.data.playlist;
         setPlaylists([...playlists, newPlaylist]);
         setNewPlaylist(newPlaylist);
         setload(false);
       } else {
-        toast.error(response.data.msg);
+        toast.error(response.data.msg,{ autoClose: 3000 });
         console.log(response.data.msg);
         setload(false);
       }
     } catch (error) {
       console.error('Error Occurred', error);
-      toast.error('Error creating playlist');
+      toast.error('Error creating playlist',{ autoClose: 3000 });
       setload(false);
     }
 

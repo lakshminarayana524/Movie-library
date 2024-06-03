@@ -5,6 +5,7 @@ import Nav from './components/nav';
 import Login from './components/login';
 import Signup from './components/signup';
 import Dashboard from './components/dash';
+import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import AddPlaylist from './components/addplaylist';
 import MovieDetail from './components/MovieDetail';
@@ -13,9 +14,10 @@ import PrivatePlaylist from './components/private_list';
 import PublicPlaylist from './components/public_playlist';
 import PlaylistInDetail from './components/PlaylistInDetail';
 import Privateindetails from './components/privateindetails';
-import 'react-toastify/dist/ReactToastify.css';
+import Loading from './components/loading'
 import axios from 'axios'; 
 import './App.css';
+import Myplaylist from './components/myplaylists';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,7 +26,6 @@ const App = () => {
 
   const handleLogout = async () => {
     try {
-      // Send a POST request to the /logout endpoint
       await axios.post('https://movie-library-backend-kxe0.onrender.com/logout');
       setIsLoggedIn(false);
       localStorage.removeItem('userId');
@@ -34,7 +35,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    // Check localStorage for userId to set initial login state
     const userId = localStorage.getItem('userId');
     if (userId) {
       setIsLoggedIn(true);
@@ -42,23 +42,26 @@ const App = () => {
   }, []);
 
   return (
-    <div>
+    <div className="App">
       <Router>
-      <AuthProvider>
-        <AuthToken setIsLoggedIn={setIsLoggedIn} /> {/* Include AuthToken */}
-        <Nav isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/movie/:title" element={<MovieDetail />} />
-          <Route path="/private_playlist" element={<PrivatePlaylist/>}/>
-          <Route path="/private_playlist/:playlistname" element={<><AuthToken/><Privateindetails /></>} />
-          <Route path="/public_playlist" element={<PublicPlaylist />} />
-          <Route path="/public_playlist/:playlistname" element={<PlaylistInDetail />} />
-          <Route path="/add" element={<AddPlaylist />} />
-        </Routes>
+        <AuthProvider>
+          <AuthToken  /> {/* Include AuthToken */}
+          <Nav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} handleLogout={handleLogout} />
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/login" element={<Login  setIsLoggedIn={setIsLoggedIn} />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/movie/:title" element={<MovieDetail />} />
+            <Route path="/loading" element={<Loading />} />
+            <Route path="/public_playlist" element={<Myplaylist />} />
+            <Route path="/public_playlist/Allplaylists" element={<PublicPlaylist/>} />
+            <Route path="/private_playlist" element={<PrivatePlaylist />} />
+            <Route path="/public_playlist/:playlistname" element={<PlaylistInDetail />} />
+            <Route path="/private_playlist/:playlistname" element={<><AuthToken/><Privateindetails /></>} />
+            <Route path="/add" element={<AddPlaylist />} />
+            <Route path="*" element={<Dashboard/>}/>
+          </Routes>
         </AuthProvider>
       </Router>
       <ToastContainer />

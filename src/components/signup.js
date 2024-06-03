@@ -46,10 +46,10 @@ const Signup = () => {
             .then((res) => {
                 if (res.data.msg === 'Email already exist') {
                     setPasswordError(res.data.msg);
-                    toast.error(res.data.msg); // Display error toast
+                    toast.error(res.data.msg,{ autoClose: 3000 }); // Display error toast
                 }
                 if (res.data.msg === 'Created Successfully') {
-                    toast.success('Successfully stored details'); // Display success toast
+                    toast.success('Successfully stored details',{ autoClose: 3000 }); // Display success toast
                     setTimeout(() => {
                         navigate('/login');
                     }, 2000);

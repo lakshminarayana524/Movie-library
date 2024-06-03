@@ -41,7 +41,7 @@
         useEffect(() => {
             console.log("useEffect - msg changed:", msg); // Added debugging point
                 if(msg==='Wrong Token'){
-                    toast.error('Something went wrong',); 
+                    toast.error('Something went wrong',{ autoClose: 3000 }); 
                     navigate('/')
                 }        
         }, [msg, navigate]);

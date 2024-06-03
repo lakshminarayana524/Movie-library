@@ -101,7 +101,7 @@ const MovieAPI = ({ search }) => {
           </div>
         </div>
       )}
-      <ToastContainer/>
+      {/* <ToastContainer/> */}
     </div>
   );
 };

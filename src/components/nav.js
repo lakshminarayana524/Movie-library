@@ -4,43 +4,51 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 import './styles/nav.css';
 
-const Nav = () => {
+const Nav = ({isLoggedIn,setIsLoggedIn}) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    // axios.get('http://localhost:5000/findtoken')
-    axios.get('https://movie-library-backend-kxe0.onrender.com/findtoken')
-
-      .then(response => {
-        console.log("token",response.data.tokenFound)
-        setIsLoggedIn(response.data.tokenFound);
-      })
-      .catch(error => {
-        console.error('Error checking token:', error);
-        setIsLoggedIn(false);
-      });
+    // Check token status when the component mounts
+    checkTokenStatus();
   }, []);
+
+  const checkTokenStatus = async () => {
+    try {
+      // const response = await axios.get('http://localhost:5000/findtoken');
+      const response = await axios.get('https://movie-library-backend-kxe0.onrender.com/findtoken');
+
+      setIsLoggedIn(response.data.tokenFound);
+    } catch (error) {
+      console.error('Error checking token:', error);
+      setIsLoggedIn(false);
+    }
+  };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  const handleLogout = () => {
-    // axios.post('http://localhost:5000/logout')
-    axios.post('https://movie-library-backend-kxe0.onrender.com/logout')
+  const handleLogout = async () => {
+    try {
+      // Immediately update UI
+      setIsLoggedIn(false);
+      
+      // Send logout request
+      // await axios.post('http://localhost:5000/logout');
+      await axios.post('https://movie-library-backend-kxe0.onrender.com/logout');
 
-      .then(response => {
-        setIsLoggedIn(false);
-        window.location.reload(); // Forcefully refresh the page
-        navigate('/');
-      })
-      .catch(error => {
-        console.error('Error logging out:', error);
-      });
+      localStorage.removeItem('userId');
+      navigate('/');
+    } catch (error) {
+      // Handle errors, if any
+      console.error('Logout failed:', error);
+      // Revert UI state on error
+      setIsLoggedIn(true);
+    }
   };
 
   return (
