@@ -15,7 +15,7 @@ const PlaylistInDetail = () => {
   useEffect(() => {
     setLoad(true);
     // axios.get(`http://localhost:5000/publiclistgetall/${playlistname}`)
-     axios.post(`https://movie-library-backend-kxe0.onrender.com/publiclistgetall/${playlistname}`)
+     axios.get(`https://movie-library-backend-kxe0.onrender.com/publiclistgetall/${playlistname}`)
       .then((res) => {
         if (res.data.success) {
           setPlaylist(res.data.playlist);
