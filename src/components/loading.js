@@ -19,8 +19,8 @@ const Loading = () => {
             }
 
             try {
-                const verifyResponse = await axios.get('http://localhost:5000/verify');
-                // const verifyResponse = await axios.get('https://movie-library-backend-kxe0.onrender.com/verify');
+                // const verifyResponse = await axios.get('http://localhost:5000/verify');
+                const verifyResponse = await axios.get('https://movie-library-backend-kxe0.onrender.com/verify');
 
                 if (verifyResponse.data.msg !== 'Successfully Verified') {
                     navigate('/login');

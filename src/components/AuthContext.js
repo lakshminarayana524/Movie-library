@@ -22,8 +22,8 @@ export const AuthProvider = ({ children }) => {
       setUserId(storedUserId);
     }
 
-    // axios.get('https://movie-library-backend-kxe0.onrender.com/verify')
-    axios.get('http://localhost:5000/verify')
+    axios.get('https://movie-library-backend-kxe0.onrender.com/verify')
+    // axios.get('http://localhost:5000/verify')
 
       .then(res => {
         if (res.data.userId) {
