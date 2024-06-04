@@ -29,3 +29,15 @@
     text-align: center;
     font-style: italic;
 }
+
+.copy-button{
+    background: transparent;
+    border:transparent ;
+    border-radius: 5px;
+}
+
+.copy-button:hover{
+    background-color: black;
+    color: aliceblue;
+    
+}

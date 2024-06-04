@@ -207,13 +207,12 @@
         padding: 8px;
     }
 }
-
- @media (max-width: 678px ) {
+@media (max-width: 678px) {
     .play-body {
         width: 250px;
-
+        margin-left: 33px;
     }
-} 
+}
 @media (max-width: 480px) {
     .play-content {
         margin: 190px 20px 10px 20px;
