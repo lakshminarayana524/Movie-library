@@ -67,9 +67,10 @@ const Nav = ({isLoggedIn,setIsLoggedIn}) => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/public_playlist" className="nav-links" onClick={toggleMenu}>
-              Public
-            </Link>
+            {isLoggedIn ? <Link to="/public_playlist" className="nav-links" onClick={toggleMenu}> Public
+            </Link> :<Link to="/public_playlist/Allplaylists" className="nav-links" onClick={toggleMenu}> Public
+            </Link>}
+             
           </li>
           <li className="nav-item">
             <Link to="/private_playlist" className="nav-links" onClick={toggleMenu}>

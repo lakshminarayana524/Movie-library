@@ -9,6 +9,7 @@ const PrivatePlaylist = () => {
     const[load,setload]=useState(false);
     const navigate = useNavigate();
     axios.defaults.withCredentials = true;
+    const userId=localStorage.getItem('userId')
     
 
     useEffect(() => {
@@ -56,7 +57,8 @@ const PrivatePlaylist = () => {
                                 <strong>{playlist.playlistname}</strong>
                             </div>
                         </div>
-                    )) : <p>No playlists found.</p>}
+                    )) :(userId ? <p>No playlists found.</p> : <p>Please Login to see playlists</p>
+                )}
                 </div>
             </div>
         </div>

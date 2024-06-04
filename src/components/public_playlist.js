@@ -8,6 +8,7 @@ const PublicPlaylist = () => {
     const [playlists, setPlaylists] = useState([]);
     const [load ,setload] = useState(false);
     const navigate = useNavigate();
+    const userId = localStorage.getItem('userId');
     axios.defaults.withCredentials = true;
     
 
@@ -52,7 +53,7 @@ const PublicPlaylist = () => {
             </button>
             <div className='publicplaylist-content'>
                 <h3>Public Playlists</h3>
-                <button className='my-playlists' onClick={handleChange}>My playlists</button>
+                {userId ? <button className='my-playlists' onClick={handleChange}>My playlists</button>:''}
                 <div className='publicplaylist-container'>
                     {playlists.length > 0 ? playlists.map((playlist, index) => (
                         <div key={index} className='publicplaylist-card' onClick={() => navigate(`/public_playlist/${playlist.playlistname}`)}>

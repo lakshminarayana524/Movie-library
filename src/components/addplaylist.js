@@ -8,36 +8,35 @@ import Loader from './loader';
 const AddPlaylist = ({ selectedMovie, onClose }) => {
   const [playlists, setPlaylists] = useState([]);
   const [selectedPlaylist, setSelectedPlaylist] = useState('');
-  const [playlistType, setPlaylistType] = useState(''); 
-  const [load,setload] = useState(false);
+  const [playlistType, setPlaylistType] = useState('');
+  const [load, setLoad] = useState(false);
   const navigate = useNavigate(); // Initialize navigate hook
   axios.defaults.withCredentials = true;
 
+  const userId = localStorage.getItem('userId'); // Get userId from local storage
+
   useEffect(() => {
     const fetchPlaylists = async () => {
-      setload(true);
+      setLoad(true);
       try {
         let response;
         if (playlistType === 'public') {
-          // response = await axios.get("http://localhost:5000/publiclibget");
-        response = await axios.get("https://movie-library-backend-kxe0.onrender.com/publiclibget");
-
+          response = await axios.get("http://localhost:5000/publiclibget");
+          // response = await axios.get("https://movie-library-backend-kxe0.onrender.com/publiclibget");
         } else if (playlistType === 'private') {
-          // response = await axios.get("http://localhost:5000/privatelibgets");
-          response = await axios.get("https://movie-library-backend-kxe0.onrender.com/privatelibgets");
-
+          response = await axios.get("http://localhost:5000/privatelibgets");
+          // response = await axios.get("https://movie-library-backend-kxe0.onrender.com/privatelibgets");
         }
 
         if (response.data.msg === 'Successfully fetched') {
-          const userId = localStorage.getItem('userId');
           const filteredPlaylists = response.data.playlists.filter(playlist => playlist.uid === userId);
           setPlaylists(filteredPlaylists);
           console.log(`${playlistType.charAt(0).toUpperCase() + playlistType.slice(1)} Playlists fetched:`, filteredPlaylists);
-          setload(false);
+          setLoad(false);
         }
       } catch (error) {
         console.error(`Error fetching ${playlistType} playlists:`, error);
-        setload(false);
+        setLoad(false);
       }
     };
 
@@ -54,19 +53,18 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
     setSelectedPlaylist(event.target.value);
   };
 
-  if(load){
+  if (load) {
     return <Loader />
   }
 
   const handleAddToPlaylist = async () => {
-    setload(true)
+    setLoad(true);
     try {
       // Check if user is logged in
-      const userId = localStorage.getItem('userId');
       if (!userId) {
         // If not logged in, redirect to login page
         navigate('/login');
-        setload(false);
+        setLoad(false);
         return;
       }
 
@@ -80,28 +78,26 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
       let addToPlaylistRes;
       if (playlistType === 'private') {
         // addToPlaylistRes = await axios.post("http://localhost:5000/add-private", payload);
-
         addToPlaylistRes = await axios.post("https://movie-library-backend-kxe0.onrender.com/add-private", payload);
       } else {
         // addToPlaylistRes = await axios.post("http://localhost:5000/add-playlist", payload);
-
         addToPlaylistRes = await axios.post("https://movie-library-backend-kxe0.onrender.com/add-playlist", payload);
       }
 
       if (addToPlaylistRes.data.success) {
         console.log(`Added ${selectedMovie.Title} to ${playlistType} playlist successfully`);
-        toast.success("Movie added to playlist successfully",{ autoClose: 3000 });
-        setload(false);
+        toast.success("Movie added to playlist successfully", { autoClose: 3000 });
+        setLoad(false);
         onClose();
       } else {
-        setload(false)
+        setLoad(false);
         console.log('Failed to add movie to playlist:', addToPlaylistRes.data.msg);
-        toast.error("Failed to add movie to playlist",{ autoClose: 3000 });
+        toast.error("Failed to add movie to playlist", { autoClose: 3000 });
       }
     } catch (error) {
-      setload(false);
+      setLoad(false);
       console.error('Error adding movie to playlist:', error);
-      toast.error("Server Error: Failed to add movie to playlist",{ autoClose: 3000 });
+      toast.error("Server Error: Failed to add movie to playlist", { autoClose: 3000 });
     }
   };
 
@@ -116,51 +112,57 @@ const AddPlaylist = ({ selectedMovie, onClose }) => {
           <p><strong>Type:</strong> {selectedMovie.Type}</p>
         </div>
       </div>
-      {!playlistType ? (
-        <div>
-          <h3>Select Playlist Type:</h3>
-          <button onClick={() => handlePlaylistTypeSelect('public')} className="select-button">Public</button>
-          <button onClick={() => handlePlaylistTypeSelect('private')} className="select-button">Private</button>
-          <button onClick={onClose} className="cancel-button-before">Cancel</button>
-        </div>
-      ) : (
-        <div>
-          {playlists.length === 0 ? (
-            <>
-            <p>No {playlistType === 'public' ? 'public' : 'private'} playlists found. Please create one.</p>
-            <button onClick={onClose} className="cancel-button">Cancel</button>
-            </>
-
-          ) : (
-            <>
-              <h3>Select {playlistType === 'public' ? 'Public' : 'Private'} Playlist:</h3>
-              <select
-                value={selectedPlaylist}
-                onChange={handlePlaylistSelect}
-                className="playlist-select"
-              >
-                <option value="">Select a playlist</option>
-                {playlists.map((playlist, index) => (
-                  <option key={index} value={playlist.playlistname}>
-                    {playlist.playlistname}
-                  </option>
-                ))}
-              </select>
-              <div className="button-group">
-                <button
-                  onClick={handleAddToPlaylist}
-                  className="add-button"
-                  disabled={!selectedPlaylist}
-                >
-                  Add to Playlist
-                </button>
+      {userId ? (
+        !playlistType ? (
+          <div>
+            <h3>Select Playlist Type:</h3>
+            <button onClick={() => handlePlaylistTypeSelect('public')} className="select-button">Public</button>
+            <button onClick={() => handlePlaylistTypeSelect('private')} className="select-button">Private</button>
+            <button onClick={onClose} className="cancel-button-before">Cancel</button>
+          </div>
+        ) : (
+          <div>
+            {playlists.length === 0 ? (
+              <>
+                <p>No {playlistType === 'public' ? 'public' : 'private'} playlists found. Please create one.</p>
                 <button onClick={onClose} className="cancel-button">Cancel</button>
-              </div>
-            </>
-          )}
-        </div>
+              </>
+            ) : (
+              <>
+                <h3>Select {playlistType === 'public' ? 'Public' : 'Private'} Playlist:</h3>
+                <select
+                  value={selectedPlaylist}
+                  onChange={handlePlaylistSelect}
+                  className="playlist-select"
+                >
+                  <option value="">Select a playlist</option>
+                  {playlists.map((playlist, index) => (
+                    <option key={index} value={playlist.playlistname}>
+                      {playlist.playlistname}
+                    </option>
+                  ))}
+                </select>
+                <div className="button-group">
+                  <button
+                    onClick={handleAddToPlaylist}
+                    className="add-button"
+                    disabled={!selectedPlaylist}
+                  >
+                    Add to Playlist
+                  </button>
+                  <button onClick={onClose} className="cancel-button">Cancel</button>
+                </div>
+              </>
+            )}
+          </div>
+        )
+      ) : (
+        <>
+        <p>Please login to use add playlist</p>
+        <button onClick={onClose} className="cancel-button">Cancel</button>
+      </>
       )}
-      {/* <ToastContainer /> */}
+      <ToastContainer />
     </div>
   );
 };

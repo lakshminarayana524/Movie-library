@@ -51,12 +51,12 @@ const App = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login  setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard isLoggedIn={isLoggedIn}/>} />
             <Route path="/movie/:title" element={<MovieDetail />} />
             <Route path="/loading" element={<Loading />} />
-            <Route path="/public_playlist" element={<Myplaylist />} />
-            <Route path="/public_playlist/Allplaylists" element={<PublicPlaylist/>} />
-            <Route path="/private_playlist" element={<PrivatePlaylist />} />
+            <Route path="/public_playlist" element={<Myplaylist setIsLoggedIn={setIsLoggedIn}  />} />
+            <Route path="/public_playlist/Allplaylists" element={<PublicPlaylist setIsLoggedIn={setIsLoggedIn} />} />
+            <Route path="/private_playlist" element={<PrivatePlaylist setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/public_playlist/:playlistname" element={<PlaylistInDetail />} />
             <Route path="/private_playlist/:playlistname" element={<><AuthToken/><Privateindetails /></>} />
             <Route path="/add" element={<AddPlaylist />} />

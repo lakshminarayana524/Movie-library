@@ -133,6 +133,7 @@ const Privatelib = () => {
             <div className='popup-header'>
               <h2>Create New Playlist</h2>
             </div>
+            {userId ? (<>
             <div>
               <input
                 type='text'
@@ -146,7 +147,12 @@ const Privatelib = () => {
               <button className='create-button' onClick={handleCreatePlaylist}>Create</button>
               <button className='close-button' onClick={togglePopup}>Close</button>
             </div>
+            </>):(<><p>please Login to add playlist</p>
+            <button className='close-button' onClick={togglePopup}>Close</button>
+              
+            </>)}
           </div>
+          
         </div>
       )}
       <ToastContainer />

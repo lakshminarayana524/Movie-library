@@ -62,7 +62,8 @@ const PlaylistInDetail = () => {
                         </div>
                     ))
                 ) : (
-                    <p>Loading...</p> 
+                    <p>please add movies
+                    </p> 
                 )}
             </div>
         </div>

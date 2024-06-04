@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './styles/public_playlist.css';
 import Loader from './loader';
 
-const Myplaylist = () => {
+const Myplaylist = ({setIsLoggedIn }) => {
     const [playlists, setPlaylists] = useState([]);
     const [load ,setload] = useState(false);
     const navigate = useNavigate();

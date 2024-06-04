@@ -19,8 +19,8 @@ const Loading = () => {
             }
 
             try {
-                // const verifyResponse = await axios.get('http://localhost:5000/verify');
-                const verifyResponse = await axios.get('https://movie-library-backend-kxe0.onrender.com/verify');
+                const verifyResponse = await axios.get('http://localhost:5000/verify');
+                // const verifyResponse = await axios.get('https://movie-library-backend-kxe0.onrender.com/verify');
 
                 if (verifyResponse.data.msg !== 'Successfully Verified') {
                     navigate('/login');
@@ -31,7 +31,7 @@ const Loading = () => {
 
                 const [userDetails, privateLib] = await Promise.all([
                     // axios.get(`http://localhost:5000/user-details/${userId}`),
-
+                    // axios.get(`http://localhost:5000/privatelibget/${userId}`)
                     axios.get(`https://movie-library-backend-kxe0.onrender.com/user-details/${userId}`),
                     axios.get(`https://movie-library-backend-kxe0.onrender.com/privatelibget/${userId}`)
                 ]);
